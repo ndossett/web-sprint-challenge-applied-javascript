@@ -20,3 +20,66 @@
 // Add a listener for click events so that when a user clicks on a card, the headline of the article is logged to the console.
 //
 // Use your function to create a card for each of the articles, and append each card to the DOM.
+
+function cardMaker(articleObj) {
+    const card = document.createElement('div')
+    const headlineDiv = document.createElement('div')
+    const authorDiv = document.createElement('div')
+    const imgDiv = document.createElement('div')
+    const img = document.createElement('img')
+    img.setAttribute('src', articleObj.authorPhoto)
+    const authorSpan = document.createElement('span')
+
+    card.classList.add('card')
+    headlineDiv.classList.add('headline')
+    authorDiv.classList.add('author')
+    imgDiv.classList.add('img-container')
+
+    card.appendChild(headlineDiv)
+    card.appendChild(authorDiv)
+    authorDiv.appendChild(imgDiv)
+    imgDiv.appendChild(img)
+    authorDiv.appendChild(authorSpan)
+
+    headlineDiv.textContent = (articleObj.headline)
+    authorSpan.textContent = (`By ${articleObj.authorName}`)
+
+    card.addEventListener('click', () => {
+        console.log(articleObj.headline)
+      })
+
+    return card
+}
+
+const cardsContainer = document.querySelector('.cards-container')
+
+axios.get('https://lambda-times-api.herokuapp.com/articles')
+        .then(res => {
+            const javaArr = res.data.articles.javascript
+            javaArr.forEach(element => {
+                cardsContainer.appendChild(cardMaker(element))
+            }); 
+            
+            const bootArr = res.data.articles.bootstrap
+            bootArr.forEach(element => {
+                cardsContainer.appendChild(cardMaker(element))
+            })
+
+            const techArr = res.data.articles.technology
+            techArr.forEach(element => {
+                cardsContainer.appendChild(cardMaker(element))
+            })
+
+            const jArr = res.data.articles.jquery
+            jArr.forEach(element => {
+                cardsContainer.appendChild(cardMaker(element))
+            })
+
+            const nodeArr = res.data.articles.node
+            nodeArr.forEach(element => {
+                cardsContainer.appendChild(cardMaker(element))
+            })
+        })
+        .catch(err => {
+            console.log(err)
+        })
