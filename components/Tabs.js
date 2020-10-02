@@ -10,10 +10,10 @@
 //
 // NOTE: you do _not_ need to install axios as it's included in the HTML via script element
 
-function tabMaker(){
+function tabMaker(ele){
     const topicDiv = document.createElement('div')
     topicDiv.classList.add('tab')
-    topicDiv.textContent = (`${res.data.[0]}`)
+    topicDiv.textContent = (`${ele}`)
     return topicDiv
 }
 
